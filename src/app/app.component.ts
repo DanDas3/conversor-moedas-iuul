@@ -14,7 +14,7 @@ export class AppComponent {
 
   public getRate = async () => {
     try {
-      const rate = await http.get("BRL/USD");
+      const rate = await http.get("pair/BRL/USD");
       console.log(rate);
     } catch (e){
       console.log(e);
