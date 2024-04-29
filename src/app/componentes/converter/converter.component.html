@@ -1,0 +1,44 @@
+<!--<p>converter works!</p>-->
+<mat-card>
+  <mat-card-header>
+    Realizar conversão
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col-md-9">
+        <form [formGroup]="conversaoForm" (ngSubmit)="converterValor()">
+          <mat-form-field>
+            <mat-label>Valor</mat-label>
+            <input type="number" matInput formControlName="valor" name="valor" [required]="true"/>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Moeda de origem</mat-label>
+            <mat-select formControlName="moedaAtual" name="moedaAtual" [required]="true">
+              <mat-option *ngFor="let moeda of moedasSuportadas" value="{{moeda.sigla}}">{{moeda.descricao}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Moeda de destino</mat-label>
+            <mat-select formControlName="moedaConvertida" name="moedaConvertida" [required]="true">
+              <mat-option *ngFor="let moeda of moedasSuportadas" value="{{moeda.sigla}}">{{moeda.descricao}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="col-md-3">
+            <button mat-stroked-button [disabled]="!conversaoForm.valid" color="primary" type="submit" >Calcular</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <mat-form-field>
+          <mat-label>Valor da conversão</mat-label>
+          <input matInput name="resultado" [value]="resultado" [readonly]="true"/>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -16,4 +16,8 @@ export class ExchangeApiService {
   getMoedasSuportadas() {
     return this.httpClient.get(`${apiConfig.apiURL}/codes`)
   }
+
+  converterValor(valor:string, moedaAtual:string, moedaConvertida: string) {
+    return this.httpClient.get(`${apiConfig.apiURL}/pair/${moedaAtual}/${moedaConvertida}/${valor}`);
+  }
 }
