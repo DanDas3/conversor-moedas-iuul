@@ -22,9 +22,20 @@ export class LocalStorageService {
       localStorage.setItem(chave,JSON.stringify([valor]));
       return;
     }
-
-    chaveLocalStorage.push(valor);
-    localStorage.setItem(chave,JSON.stringify(chaveLocalStorage));
+    //
+    // chaveLocalStorage.push(valor);
+    // localStorage.setItem(chave,JSON.stringify(chaveLocalStorage));
   }
 
+  atualizarChave(chave: string, valor: any) {
+    localStorage.setItem(chave,JSON.stringify(valor));
+  }
+
+  removerElementoPorIndice(chave: string, index: number) {
+    const chaveLocalStorage = this.lerChave(chave);
+    if(index >= 0) {
+      chaveLocalStorage.splice(index,1);
+      this.atualizarChave(chave,chaveLocalStorage);
+    }
+  }
 }

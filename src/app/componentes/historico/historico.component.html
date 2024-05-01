@@ -1,0 +1,59 @@
+<mat-card>
+  <mat-card-header>
+    Histórico de conversões realizadas
+  </mat-card-header>
+  <mat-card-content>
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="dataConversao">
+          <th mat-header-cell *matHeaderCellDef> Data </th>
+          <td mat-cell *matCellDef="let element"> {{formatarData(element.dataConversao)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horaConversao">
+          <th mat-header-cell *matHeaderCellDef> Hora </th>
+          <td mat-cell *matCellDef="let element"> {{formatarHora(element.dataConversao)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="valor">
+          <th mat-header-cell *matHeaderCellDef> Valor informado</th>
+          <td mat-cell *matCellDef="let element"> {{element.valor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="valorConvertido">
+          <th mat-header-cell *matHeaderCellDef> Valor convertido </th>
+          <td mat-cell *matCellDef="let element"> {{element.valorConvertido}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="moedaOrigem">
+          <th mat-header-cell *matHeaderCellDef> Moeda selecionada </th>
+          <td mat-cell *matCellDef="let element"> {{element.moedaOrigem}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="moedaConvertida">
+          <th mat-header-cell *matHeaderCellDef> Moeda convertida </th>
+          <td mat-cell *matCellDef="let element"> {{element.moedaConvertida}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="taxaCotacao">
+          <th mat-header-cell *matHeaderCellDef> Taxa da cotacao </th>
+          <td mat-cell *matCellDef="let element"> {{element.taxaCotacao}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acao">
+          <th mat-header-cell *matHeaderCellDef> Ação </th>
+          <td mat-cell *matCellDef="let element; let i = index"> <button mat-mini-fab color="primary" type="button" (click)="removerConversao(i)"> <mat-icon>delete</mat-icon></button> </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   aria-label="Selecione uma página de histórico de conversão">
+    </mat-paginator>
+
+  </mat-card-content>
+</mat-card>
