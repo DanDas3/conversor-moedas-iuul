@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {ConversaoModel} from "../model/conversao.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,23 @@ export class LocalStorageService {
     return JSON.parse(valorLocalStorage);
   }
 
-  salvarChaveComoLista(chave:string, valor:any) {
-    const chaveLocalStorage = this.lerChave(chave);
-    if(!chaveLocalStorage) {
-      localStorage.setItem(chave,JSON.stringify([valor]));
+  criarChaveComoLista(chave:string, valor:any) {
+    if(!valor) {
+      localStorage.setItem(chave,JSON.stringify([]));
       return;
     }
-    //
-    // chaveLocalStorage.push(valor);
-    // localStorage.setItem(chave,JSON.stringify(chaveLocalStorage));
+    localStorage.setItem(chave,JSON.stringify([valor]));
+  }
+
+  adicionarElementoChaveLista(chave:string, valor:any) {
+    const chaveLocalStorage = this.lerChave(chave);
+    if(!chaveLocalStorage) {
+      this.criarChaveComoLista(chave,valor);
+      return;
+    }
+
+    chaveLocalStorage.push(valor);
+    this.atualizarChave(chave,chaveLocalStorage);
   }
 
   atualizarChave(chave: string, valor: any) {

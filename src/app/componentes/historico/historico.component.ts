@@ -62,7 +62,6 @@ export class HistoricoComponent implements AfterViewInit {
   }
 
   removerConversao(index:number) {
-    console.log('remover', index);
     this.localStorageService.removerElementoPorIndice(this.chaveLocalStorage, index);
     this.carregarHistorico();
   }

@@ -58,7 +58,7 @@ export class ConverterComponent {
       conversao.taxaCotacao = data.conversion_rate;
       conversao.moedaOrigem = this.conversaoForm?.get('moedaAtual')?.value;
       conversao.moedaConvertida = this.conversaoForm?.get('moedaConvertida')?.value
-      this.localStorageService.salvarChaveComoLista('conversoes', conversao);
+      this.localStorageService.adicionarElementoChaveLista('conversoes', conversao);
     })
   }
 
