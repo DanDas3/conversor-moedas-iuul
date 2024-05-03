@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
-import {HomeComponent} from "./views/home/home.component";
-import {ApresentacaoComponent} from "./componentes/apresentacao/apresentacao.component";
-import {MoedasComponent} from "./componentes/moedas/moedas.component";
-import {ConverterComponent} from "./componentes/converter/converter.component";
-import {HistoricoComponent} from "./componentes/historico/historico.component";
+import {ApresentacaoComponent} from "./pages/apresentacao/apresentacao.component";
+import {MoedasComponent} from "./pages/moedas/moedas.component";
+import {ConverterComponent} from "./pages/converter/converter.component";
+import {HistoricoComponent} from "./pages/historico/historico.component";
 
 export const routes: Routes = [
   {path:'', redirectTo:'apresentacao', pathMatch:'full'},
