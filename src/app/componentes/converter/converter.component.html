@@ -9,7 +9,7 @@
         <form [formGroup]="conversaoForm" (ngSubmit)="converterValor()">
           <mat-form-field>
             <mat-label>Valor</mat-label>
-            <input type="number" matInput formControlName="valor" name="valor" [required]="true"/>
+            <input currencyMask matInput formControlName="valor" name="valor" [options]="{thousands: '.', decimal: ','}" [required]="true"/>
           </mat-form-field>
 
           <mat-form-field>

@@ -12,6 +12,7 @@ import {MatListModule} from "@angular/material/list";
 import {NgForOf} from "@angular/common";
 import {LocalStorageService} from "../../shared/service/local-storage.service";
 import {ConversaoModel} from "../../shared/model/conversao.model";
+import {NgxCurrencyDirective} from "ngx-currency";
 
 @Component({
   selector: 'app-converter',
@@ -25,7 +26,8 @@ import {ConversaoModel} from "../../shared/model/conversao.model";
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
-    NgForOf
+    NgForOf,
+    NgxCurrencyDirective
   ],
   templateUrl: './converter.component.html',
   styleUrl: './converter.component.css'
