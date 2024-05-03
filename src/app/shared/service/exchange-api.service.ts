@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {apiConfig} from "../apiConfig";
+import {IConversaoExchangeApi} from "../interfaces/iconversao-exchange-api";
+import {ICodigosSuportadosExchangeApi} from "../interfaces/icodigos-suportados-exchange-api";
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +16,10 @@ export class ExchangeApiService {
   constructor(private httpClient: HttpClient) { }
 
   getMoedasSuportadas() {
-    return this.httpClient.get(`${apiConfig.apiURL}/codes`)
+    return this.httpClient.get<ICodigosSuportadosExchangeApi>(`${apiConfig.apiURL}/codes`)
   }
 
   converterValor(valor:string, moedaAtual:string, moedaConvertida: string) {
-    return this.httpClient.get(`${apiConfig.apiURL}/pair/${moedaAtual}/${moedaConvertida}/${valor}`);
+    return this.httpClient.get<IConversaoExchangeApi>(`${apiConfig.apiURL}/pair/${moedaAtual}/${moedaConvertida}/${valor}`);
   }
 }

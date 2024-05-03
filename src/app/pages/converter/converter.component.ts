@@ -6,7 +6,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ExchangeApiService} from "../../shared/service/exchange-api.service";
-import {Moeda} from "../../shared/model/moeda.model";
+import {Sigla} from "../../shared/model/sigla.model";
 import {MatSelectModule} from "@angular/material/select";
 import {MatListModule} from "@angular/material/list";
 import {NgForOf} from "@angular/common";
@@ -34,7 +34,7 @@ import {NgxCurrencyDirective} from "ngx-currency";
 })
 export class ConverterComponent {
   conversaoForm: FormGroup;
-  moedasSuportadas:Moeda[] = [];
+  moedasSuportadas:Sigla[] = [];
   resultado:string = "0";
   constructor(
     private fb:FormBuilder,
@@ -54,12 +54,13 @@ export class ConverterComponent {
   converterValor() {
     this.exchangeApiService.converterValor(this.conversaoForm?.get('valor')?.value,this.conversaoForm?.get('moedaAtual')?.value,this.conversaoForm?.get('moedaConvertida')?.value).subscribe((data:any) => {
       this.resultado = data.conversion_result;
-      let conversao: ConversaoModel = new ConversaoModel();
-      conversao.valor = this.conversaoForm?.get('valor')?.value;
-      conversao.valorConvertido = this.resultado;
-      conversao.taxaCotacao = data.conversion_rate;
-      conversao.moedaOrigem = this.conversaoForm?.get('moedaAtual')?.value;
-      conversao.moedaConvertida = this.conversaoForm?.get('moedaConvertida')?.value
+      let conversao: ConversaoModel = new ConversaoModel(
+        this.conversaoForm?.get('valor')?.value,
+        data.conversion_result,
+        data.base_code,
+        data.target_code,
+        data.conversion_rate
+        );
       this.localStorageService.adicionarElementoChaveLista('conversoes', conversao);
     })
   }
@@ -67,7 +68,7 @@ export class ConverterComponent {
   getMoedasSuportadas() {
     this.exchangeApiService.getMoedasSuportadas().subscribe((data: any) => {
       data.supported_codes.forEach((item: any) => {
-        this.moedasSuportadas.push(new Moeda(item[0], item[1]))
+        this.moedasSuportadas.push(new Sigla(item[0], item[1]))
       });
     })
   }

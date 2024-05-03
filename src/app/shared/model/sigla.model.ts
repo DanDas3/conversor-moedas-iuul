@@ -1,4 +1,4 @@
-export class Moeda {
+export class Sigla {
     public sigla:string = '';
     public descricao:string = '';
 
