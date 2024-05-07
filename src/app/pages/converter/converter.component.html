@@ -6,45 +6,50 @@
   <mat-card-content>
     <form [formGroup]="conversaoForm" (ngSubmit)="converterValor()">
       <div class="row">
-<!--        <div class="d-flex">-->
-<!--          -->
-<!--        </div>-->
-        <div class="col-md-12 d-flex">
+        <div class="col-12 d-md-flex">
           <div class="col-md-4">
-            <mat-form-field>
-              <mat-label>Valor</mat-label>
-              <input  currencyMask matInput formControlName="valor" (keydown)="apenasNumeros($event)" name="valor" [options]="{thousands: '.', decimal: ','}" [required]="true"/>
-            </mat-form-field>
-            <span class="mensagem-span-erro" *ngIf="conversaoForm.get('valor')?.touched && conversaoForm.get('valor')?.invalid" >Campo Obrigatório</span>
+            <div class="form-group d-inline-grid">
+              <mat-form-field>
+                <mat-label>Valor</mat-label>
+                <input  currencyMask matInput formControlName="valor" (keydown)="apenasNumeros($event)" name="valor" [options]="{thousands: '.', decimal: ','}" [required]="true"/>
+              </mat-form-field>
+              <span class="mensagem-span-erro" *ngIf="conversaoForm.get('valor')?.touched && conversaoForm.get('valor')?.invalid" >Campo Obrigatório</span>
+            </div>
           </div>
 
           <div class="col-md-4">
-            <mat-form-field>
-              <mat-label>Moeda de origem</mat-label>
-              <mat-select formControlName="moedaAtual" name="moedaAtual" [required]="true">
-                <mat-option *ngFor="let moeda of moedasSuportadas" value="{{moeda.sigla}}">{{moeda.descricao}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <span class="mensagem-span-erro" *ngIf="conversaoForm.get('moedaAtual')?.invalid && conversaoForm.get('moedaAtual')?.touched" >Campo Obrigatório</span>
+            <div class="form-group d-inline-grid">
+              <mat-form-field>
+                <mat-label>Moeda de origem</mat-label>
+                <mat-select formControlName="moedaAtual" name="moedaAtual" [required]="true">
+                  <mat-option *ngFor="let moeda of moedasSuportadas" value="{{moeda.sigla}}">{{moeda.descricao}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+                <span class="mensagem-span-erro" *ngIf="conversaoForm.get('moedaAtual')?.invalid && conversaoForm.get('moedaAtual')?.touched" >Campo Obrigatório</span>
+
+            </div>
           </div>
 
           <div class="col-md-4">
-            <mat-form-field>
-              <mat-label>Moeda de destino</mat-label>
-              <mat-select formControlName="moedaDestino" name="moedaDestino" [required]="true">
-                <mat-option *ngFor="let moeda of moedasSuportadas" value="{{moeda.sigla}}">{{moeda.descricao}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <span class="mensagem-span-erro" *ngIf="conversaoForm.get('moedaDestino')?.invalid && conversaoForm.get('moedaDestino')?.touched" >Campo Obrigatório</span>
+            <div class="form-group d-inline-grid">
+              <mat-form-field >
+                <mat-label>Moeda de destino</mat-label>
+                <mat-select formControlName="moedaDestino" name="moedaDestino" [required]="true">
+                  <mat-option *ngFor="let moeda of moedasSuportadas" value="{{moeda.sigla}}">{{moeda.descricao}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <span class="mensagem-span-erro" *ngIf="conversaoForm.get('moedaDestino')?.invalid && conversaoForm.get('moedaDestino')?.touched" >Campo Obrigatório</span>
+            </div>
+
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-4">
           <button mat-stroked-button [disabled]="!conversaoForm.valid" color="primary" type="submit" >Calcular</button>
         </div>
       </div>
     </form>
-    <div class="row mt-3">
-      <div class="col-md-3">
+    <div class="row mt-4">
+      <div class="col-md-4">
         <mat-form-field>
           <mat-label>Valor da conversão</mat-label>
           <input matInput name="resultado" [value]="resultado" [readonly]="true"/>
