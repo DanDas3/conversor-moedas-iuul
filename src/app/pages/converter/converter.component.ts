@@ -48,6 +48,9 @@ export class ConverterComponent {
 
     })
   }
+  valor: string = ''
+  moedaAtual: string = '';
+  moedaDestino: string = '';
 
   ngOnInit() {
     this.getMoedasSuportadas();
@@ -56,7 +59,7 @@ export class ConverterComponent {
     console.log(this.conversaoForm?.get('moedaDestino'))
   }
   converterValor() {
-    this.exchangeApiService.converterValor(this.conversaoForm?.get('valor')?.value,this.conversaoForm?.get('moedaAtual')?.value,this.conversaoForm?.get('moedaDestino')?.value).subscribe((data:any) => {
+    this.exchangeApiService.converterValor(this.valor,this.moedaAtual,this.moedaDestino).subscribe((data:any) => {
       this.resultado = data.conversion_result;
       let conversao: ConversaoModel = new ConversaoModel(
         this.conversaoForm?.get('valor')?.value,
