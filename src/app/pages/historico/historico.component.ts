@@ -7,11 +7,16 @@ import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {
+  MatDialog,
+  MatDialogModule,
+} from "@angular/material/dialog";
+import {ExclusaoDialogComponent} from "../../components/exclusao-dialog/exclusao-dialog.component";
 
 @Component({
   selector: 'app-historico',
   standalone: true,
-  imports: [MatCardModule, MatListModule, MatTableModule, MatPaginatorModule,MatIconModule,MatButtonModule],
+  imports: [MatCardModule, MatListModule, MatTableModule, MatPaginatorModule,MatIconModule,MatButtonModule, MatDialogModule],
   templateUrl: './historico.component.html',
   styleUrl: './historico.component.css'
 })
@@ -29,7 +34,20 @@ export class HistoricoComponent implements AfterViewInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  constructor(private localStorageService: LocalStorageService) {
+  constructor(private localStorageService: LocalStorageService,
+              public dialog: MatDialog) {
+  }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string, index: number): void {
+    const dialogExclusaoRef = this.dialog.open(ExclusaoDialogComponent, {
+      width: '300px',
+      enterAnimationDuration,
+      exitAnimationDuration
+    });
+
+    dialogExclusaoRef.afterClosed().subscribe((result) => {
+      if (result === true)  this.removerConversao(index)
+    })
   }
 
   ngAfterViewInit() {
