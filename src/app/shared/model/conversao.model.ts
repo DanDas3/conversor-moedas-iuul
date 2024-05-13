@@ -1,12 +1,13 @@
 export class ConversaoModel {
   dataConversao: Date = new Date();
-  valor: string = '';
-  valorConvertido: string = '';
+  valor: number = 0;
+  valorConvertido: number = 0;
   moedaOrigem: string = '';
   moedaConvertida: string = '';
-  taxaCotacao: string = '';
+  taxaCotacao: number = 0;
+  altaConversao: boolean = false;
 
-  constructor(valor: string, valorConvertido: string, moedaOrigem: string, moedaConvertida: string, taxaCotacao: string) {
+  constructor(valor: number, valorConvertido: number, moedaOrigem: string, moedaConvertida: string, taxaCotacao: number) {
     this.valor = valor;
     this.valorConvertido = valorConvertido;
     this.moedaOrigem = moedaOrigem;

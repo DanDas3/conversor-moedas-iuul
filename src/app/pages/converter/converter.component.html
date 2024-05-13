@@ -54,6 +54,8 @@
           <mat-label>Valor da conversão</mat-label>
           <input matInput name="resultado" [value]="resultado" [readonly]="true"/>
         </mat-form-field>
+        <br>
+        <small *ngIf="resultado">Taxa de cotação: {{taxaCotacao}}</small>
       </div>
     </div>
   </mat-card-content>

@@ -12,11 +12,13 @@ import {
   MatDialogModule,
 } from "@angular/material/dialog";
 import {ExclusaoDialogComponent} from "../../components/exclusao-dialog/exclusao-dialog.component";
+import {NgIf} from "@angular/common";
+import {config} from "../../shared/config";
 
 @Component({
   selector: 'app-historico',
   standalone: true,
-  imports: [MatCardModule, MatListModule, MatTableModule, MatPaginatorModule,MatIconModule,MatButtonModule, MatDialogModule],
+  imports: [MatCardModule, MatListModule, MatTableModule, MatPaginatorModule,MatIconModule,MatButtonModule, MatDialogModule, NgIf],
   templateUrl: './historico.component.html',
   styleUrl: './historico.component.css'
 })
@@ -83,4 +85,6 @@ export class HistoricoComponent implements AfterViewInit {
     this.localStorageService.removerElementoPorIndice(this.chaveLocalStorage, index);
     this.carregarHistorico();
   }
+
+  protected readonly config = config;
 }
