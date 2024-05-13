@@ -19,7 +19,7 @@ export class ExchangeApiService {
     return this.httpClient.get<ICodigosSuportadosExchangeApi>(`${apiConfig.apiURL}/codes`)
   }
 
-  converterValor(valor:string, moedaAtual:string, moedaConvertida: string) {
-    return this.httpClient.get<IConversaoExchangeApi>(`${apiConfig.apiURL}/pair/${moedaAtual}/${moedaConvertida}/${valor}`);
+  converterValor(valor:number, moedaAtual:string, moedaDestino: string) {
+    return this.httpClient.get<IConversaoExchangeApi>(`${apiConfig.apiURL}/pair/${moedaAtual}/${moedaDestino}/${valor}`);
   }
 }
