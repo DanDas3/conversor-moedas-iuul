@@ -5,7 +5,7 @@ export class ConversaoModel {
   moedaOrigem: string = '';
   moedaConvertida: string = '';
   taxaCotacao: number = 0;
-  altaConversao: boolean = false;
+  altoValor: boolean = false;
 
   constructor(valor: number, valorConvertido: number, moedaOrigem: string, moedaConvertida: string, taxaCotacao: number) {
     this.valor = valor;

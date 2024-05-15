@@ -5,6 +5,7 @@ import {ExchangeApiService} from "../../shared/service/exchange-api.service";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {Sigla} from "../../shared/model/sigla.model";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
+import {ErrorTreatment} from "../../shared/ErrorTreatment";
 @Component({
   selector: 'app-moedas',
   standalone: true,
@@ -18,14 +19,21 @@ export class MoedasComponent  implements AfterViewInit{
   dataSource = new MatTableDataSource<Sigla>([]);
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  constructor(public exchangeApiService: ExchangeApiService) {
+  constructor(public exchangeApiService: ExchangeApiService,
+              private error: ErrorTreatment) {
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
   ngOnInit() {
-    this.getMoedasSuportadas();
+    try {
+      this.getMoedasSuportadas();
+    }
+    catch (e: any) {
+      this.error.redirecionar();
+    }
+
   }
 
   getMoedasSuportadas() {

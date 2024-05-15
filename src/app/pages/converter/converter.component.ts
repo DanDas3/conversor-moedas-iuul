@@ -16,6 +16,9 @@ import {NgxCurrencyDirective} from "ngx-currency";
 import {config} from '../../shared/config';
 import {lastValueFrom} from "rxjs";
 import {IConversaoExchangeApi} from "../../shared/interfaces/iconversao-exchange-api";
+import {MatDialog} from "@angular/material/dialog";
+import {ErrorDialogComponent} from "../../components/error-dialog/error-dialog.component";
+import {ErrorTreatment} from "../../shared/ErrorTreatment";
 
 @Component({
   selector: 'app-converter',
@@ -44,7 +47,9 @@ export class ConverterComponent {
   constructor(
     private fb:FormBuilder,
     private exchangeApiService: ExchangeApiService,
-    private localStorageService: LocalStorageService) {
+    private localStorageService: LocalStorageService,
+    public errorDialog: MatDialog,
+    private error: ErrorTreatment) {
     this.conversaoForm = this.fb.group({
       valor: [0,[Validators.required, Validators.min(0)]],
       moedaAtual: ['', [Validators.required]],
@@ -60,25 +65,44 @@ export class ConverterComponent {
     this.getMoedasSuportadas();
   }
   async converterValor() {
-    const result:IConversaoExchangeApi = await lastValueFrom(this.exchangeApiService.converterValor(this.valor,this.moedaAtual,this.moedaDestino));
-    this.resultado = result.conversion_result;
-    let conversao: ConversaoModel = new ConversaoModel(
-      this.valor,
-      result.conversion_result,
-      result.base_code,
-      result.target_code,
-      result.conversion_rate);
-    conversao.altaConversao = await this.verificarAltoValor(this.valor,this.moedaAtual, this.moedaDestino, conversao);
-    this.taxaCotacao = conversao.taxaCotacao;
-    this.localStorageService.adicionarElementoChaveLista('conversoes', conversao);
+    try {
+      const result:IConversaoExchangeApi = await lastValueFrom(this.exchangeApiService.converterValor(this.valor,this.moedaAtual,this.moedaDestino));
+      this.resultado = result.conversion_result;
+      let conversao: ConversaoModel = new ConversaoModel(
+        this.valor,
+        result.conversion_result,
+        result.base_code,
+        result.target_code,
+        result.conversion_rate);
+      conversao.altoValor = await this.verificarAltoValor(this.valor,this.moedaAtual, this.moedaDestino, conversao);
+      this.taxaCotacao = conversao.taxaCotacao;
+      this.localStorageService.adicionarElementoChaveLista('conversoes', conversao);
+    }
+    catch (e: any) {
+      this.errorDialog.open(ErrorDialogComponent, {
+        width: '300px',
+        enterAnimationDuration: 200,
+        exitAnimationDuration: 200,
+        data: {
+          themeColor: 'warn'
+        }
+      });
+    }
   }
 
   getMoedasSuportadas() {
-    this.exchangeApiService.getMoedasSuportadas().subscribe((data: any) => {
-      data.supported_codes.forEach((item: any) => {
-        this.moedasSuportadas.push(new Sigla(item[0], item[1]))
-      });
-    })
+    try {
+      this.exchangeApiService.getMoedasSuportadas().subscribe((data: any) => {
+        data.supported_codes.forEach((item: any) => {
+          this.moedasSuportadas.push(new Sigla(item[0], item[1]))
+        });
+      },(error:any) => {
+        this.error.redirecionar();
+      })
+    }catch (e:any) {
+      this.error.redirecionar();
+    }
+
   }
 
   apenasNumeros(event: any) {
@@ -96,4 +120,5 @@ export class ConverterComponent {
     result = await lastValueFrom(this.exchangeApiService.converterValor(valor,conversao.moedaOrigem,config.moeda_padrao));
     return result.conversion_result >= config.alto_valor;
   }
+
 }

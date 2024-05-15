@@ -8,7 +8,7 @@
       <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="dataConversao">
           <th mat-header-cell *matHeaderCellDef> Data </th>
-          <td mat-cell *matCellDef="let element"> {{formatarData(element.dataConversao)}}<span *ngIf="element?.altaConversao">*</span> </td>
+          <td mat-cell *matCellDef="let element"> {{formatarData(element.dataConversao)}}<span *ngIf="element?.altoValor">*</span> </td>
         </ng-container>
 
         <ng-container matColumnDef="horaConversao">
