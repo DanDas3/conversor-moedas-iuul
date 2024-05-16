@@ -1,4 +1,6 @@
+import { v4 as uuidv4 } from 'uuid';
 export class ConversaoModel {
+  id: string = uuidv4();
   dataConversao: Date = new Date();
   valor: number = 0;
   valorConvertido: number = 0;

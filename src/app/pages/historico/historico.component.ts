@@ -40,7 +40,7 @@ export class HistoricoComponent implements AfterViewInit {
               public dialog: MatDialog) {
   }
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string, index: number): void {
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: string): void {
     const dialogExclusaoRef = this.dialog.open(ExclusaoDialogComponent, {
       width: '300px',
       enterAnimationDuration,
@@ -48,7 +48,7 @@ export class HistoricoComponent implements AfterViewInit {
     });
 
     dialogExclusaoRef.afterClosed().subscribe((result) => {
-      if (result === true)  this.removerConversao(index)
+      if (result === true)  this.removerConversao(id)
     })
   }
 
@@ -81,8 +81,8 @@ export class HistoricoComponent implements AfterViewInit {
     return new Date(data.toLocaleString(locale, { timeZone: timeZone }));
   }
 
-  removerConversao(index:number) {
-    this.localStorageService.removerElementoPorIndice(this.chaveLocalStorage, index);
+  removerConversao(id:string) {
+    this.localStorageService.removerElementoPorIndice(this.chaveLocalStorage, id);
     this.carregarHistorico();
   }
 

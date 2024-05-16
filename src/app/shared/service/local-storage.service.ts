@@ -40,9 +40,10 @@ export class LocalStorageService {
     localStorage.setItem(chave,JSON.stringify(valor));
   }
 
-  removerElementoPorIndice(chave: string, index: number) {
-    const chaveLocalStorage = this.lerChave(chave);
-    if(index >= 0) {
+  removerElementoPorIndice(chave: string, id: string) {
+    const chaveLocalStorage:ConversaoModel[] = this.lerChave(chave);
+    if(id !== '') {
+      const index = chaveLocalStorage.findIndex(data => data.id === id)
       chaveLocalStorage.splice(index,1);
       this.atualizarChave(chave,chaveLocalStorage);
     }
